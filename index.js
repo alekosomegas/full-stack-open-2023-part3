@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("static_dist"));
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const content = request.body;
   if (!content.name || !content.number) {
     return response.status(400).json({ error: "content missing" });
@@ -29,7 +29,10 @@ app.post("/api/persons", (request, response) => {
 
   newPerson.save().then((savedPerson) => {
     response.json(savedPerson);
-  });
+  })
+  .catch(error => {
+    response.status(400).send(error)
+    next(error)});
 });
 
 app.get("/", (request, response) => {
