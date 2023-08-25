@@ -26,6 +26,17 @@ let data = [
     }
 ]
 
+app.post('/api/persons', (req, res) => {
+    const content = req.body
+    if (!content.name) {
+       return res.status(400).json({error: 'content missing'})
+    }
+    const id = Math.floor(Math.random() * 1000000000000000)
+    console.log(req.body);
+    const newPerson = {"id": id, "name": content.name, "number": content.number }
+    data = data.concat(newPerson)
+    res.json(data)
+})
 
 app.get('/', (req, res) => {
     res.send('Hello world')
