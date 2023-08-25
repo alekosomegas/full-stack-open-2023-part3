@@ -28,8 +28,11 @@ let data = [
 
 app.post('/api/persons', (req, res) => {
     const content = req.body
-    if (!content.name) {
+    if (!content.name || !content.number) {
        return res.status(400).json({error: 'content missing'})
+    }
+    if (data.find(per => per.name === content.name)) {
+        return res.status(400).json({error: 'name must be unique'})
     }
     const id = Math.floor(Math.random() * 1000000000000000)
     console.log(req.body);
