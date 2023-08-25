@@ -32,6 +32,13 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 })
 
+app.get('/info', (req, res) => {
+    res.send(
+        `<p>Phonebook has info for ${data.length} people</p>
+        <p>${new Date()}</p>
+    `)
+})
+
 app.get('/api/persons', (req, res) => {
     res.json(data)
 })
